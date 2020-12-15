@@ -1,0 +1,21 @@
+version: 1
+formatters:
+  simple:
+    class: logging.Formatter
+    format: "%(levelname)s: %(message)s"
+handlers:
+  file_handler_all_levels:
+    class: logging.FileHandler
+    filename: stackoverflow_analytics.log
+    level: DEBUG
+    formatter: simple
+  file_handler_warning:
+    class: logging.FileHandler
+    filename: stackoverflow_analytics.warn
+    level: WARNING
+    formatter: simple
+loggers:
+  task_Tarelkin_Aleksandr_stackoverflow_analytics:
+    level: DEBUG
+    handlers: [file_handler_all_levels, file_handler_warning]
+    propagate: no
