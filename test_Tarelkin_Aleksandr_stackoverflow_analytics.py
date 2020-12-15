@@ -160,6 +160,6 @@ def test_main_can_properly_ran_all_process(tiny_dataset_fio, queries_sample_fio,
     ):
         main()
     captured = capsys.readouterr()
-    from pdb import set_trace; set_trace()
+
     assert '["command", 13], ["work", 13], ["linux", 9]' in captured.out
     assert '' == captured.err, "service messages must no be in stderr"

@@ -6,9 +6,10 @@ import logging
 import logging.config
 import re
 import sys
-import yaml
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 from collections import defaultdict
+
+import yaml
 from lxml import etree
 
 
@@ -123,7 +124,7 @@ def callback_query(dataset_fpath: str, stop_words_fpath: str, queries_fpath: str
 
     for query in queries_list:
         query_result = word_popularity_index.query(*query)
-        print(f'{query_result}', file=sys.stdout)
+        print(f'{query_result}\n', file=sys.stdout)
 
     logger.info('finish processing queries')
 
