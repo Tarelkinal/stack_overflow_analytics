@@ -7,7 +7,7 @@ import csv
 
 import pytest
 
-from task_Tarelkin_Aleksandr_stackoverflow_analytics import (
+from stackoverflow_analytics import (
     load_xml_documents,
     build_word_popularity_index,
     ArgumentParser,
@@ -17,7 +17,6 @@ from task_Tarelkin_Aleksandr_stackoverflow_analytics import (
 )
 
 QUERIES_FPATH = 'queries_sample.csv'
-STACKOVERFLOW_POSTS_FPATH = 'stackoverflow_posts_sample.xml'
 DATASET_TINY_XML = dedent("""\
     <row PostTypeId="1" CreationDate="2008-10-15" Score="1" Title="how linux linux?" />	
     <row PostTypeId="1" CreationDate="2008-10-15" Score="12" Title="How command work in Linux?" />
@@ -31,19 +30,6 @@ QUERIES_SAMPLE = [
     [2008, 2009, 3],
     [2010, 2012, 1]
 ]
-QUERIES_SAMPLE_2 = [
-    [2008, 2008, 20],
-    [2008, 2009, 4],
-    [2008, 2010, 10],
-    [2009, 2009, 30],
-    [2008, 2020, 10]
-]
-ANSWER_FOR_QUERIES_SAMPLE_2 = """\
-{"start": 2008, "end": 2008, "top": [["using", 257], ["concatenate", 243], ["linq", 243], ["strings", 243], ["file", 178], ["create", 171], ["text", 167], ["batch", 164], ["database", 91], ["c", 85], ["enums", 85], ["save", 85], ["ways", 85], ["write", 79], ["literal", 74], ["short", 74], ["80", 62], ["characters", 62], ["lines", 62], ["make", 62]]}
-{"start": 2008, "end": 2009, "top": [["using", 257], ["concatenate", 243], ["linq", 243], ["strings", 243]]}
-{"start": 2008, "end": 2010, "top": [["using", 321], ["ways", 293], ["text", 261], ["concatenate", 243], ["linq", 243], ["strings", 243], ["implement", 218], ["data", 214], ["mongodb", 208], ["versioning", 208]]}
-{"start": 2009, "end": 2009, "top": []}
-{"start": 2008, "end": 2020, "top": [["using", 321], ["ways", 293], ["text", 261], ["concatenate", 243], ["linq", 243], ["strings", 243], ["implement", 218], ["data", 214], ["mongodb", 208], ["versioning", 208]]}"""
 
 
 @pytest.fixture()
@@ -85,30 +71,6 @@ def test_can_load_xml_documents(tiny_dataset_fio):
     assert len(etalon_documents) == len(documents), "load_xml_documents incorrectly loaded dataset"
     assert sum([0 if x.values() == y.values() else 1 for x, y in zip(etalon_documents, documents)]) == 0, (
         "load_xml_documents incorrectly loaded dataset"
-    )
-
-
-@pytest.fixture()
-def stackoverflow_posts_sample_documents():
-    documents = load_xml_documents(STACKOVERFLOW_POSTS_FPATH)
-    return documents
-
-
-def test_can_load_stackoverflow_posts_sample(stackoverflow_posts_sample_documents):
-    documents = stackoverflow_posts_sample_documents
-    assert len(documents) == 1120, "stackoverflow_posts_sample was loaded incorrectly"
-
-
-def test_world_popularity_index_can_return_right_answer(stackoverflow_posts_sample_documents):
-    documents = stackoverflow_posts_sample_documents
-    word_popularity_index = build_word_popularity_index(documents)
-    answer = []
-    for query in QUERIES_SAMPLE_2:
-        answer.append(word_popularity_index.query(*query))
-    res_answer = '\n'.join(answer)
-
-    assert res_answer == ANSWER_FOR_QUERIES_SAMPLE_2, (
-        f"True answer if {ANSWER_FOR_QUERIES_SAMPLE_2}, but got \n{res_answer}"
     )
 
 

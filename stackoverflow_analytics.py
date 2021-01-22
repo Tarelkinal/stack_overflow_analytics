@@ -58,7 +58,7 @@ class WordPopularityIndex:
         if len(answer_dict) < top_len:
             logger.warning(
                 'not enough data to answer, found '
-                'top_%s words out of top_%s for period "%s,%s"',
+                '%s words out of %s for period "%s,%s"',
                 len(answer_dict),
                 top_len,
                 start_year,
@@ -124,7 +124,7 @@ def callback_query(dataset_fpath: str, stop_words_fpath: str, queries_fpath: str
 
     for query in queries_list:
         query_result = word_popularity_index.query(*query)
-        print(f'{query_result}\n', file=sys.stdout)
+        print(query_result, file=sys.stdout)
 
     logger.info('finish processing queries')
 
