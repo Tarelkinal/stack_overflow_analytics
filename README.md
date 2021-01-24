@@ -31,4 +31,4 @@ top_N_word_score]]}
 The popularity value of a word is the sum of all the ratings of questions in the title of which the word has appeared 1 or more times.
 
 ## References
-The application was created as part of passing the course "industrial development in python" from the company Big Data team.
+The application was created as part of passing the course ["Software Development Best Practices in Python"](https://bigdatateam.org/python-course) from the company Big Data team.
